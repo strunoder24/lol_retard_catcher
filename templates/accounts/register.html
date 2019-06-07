@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Регистрация
+{% endblock %}
+
+
+{% block content %}
+    <section id="register" class="bg-light py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 mx-auto">
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            <h4>
+                                <i class="fas fa-user-plus"></i> Регистрация</h4>
+                        </div>
+                        <div class="card-body">
+                            <!--Alerts-->
+                            {% include 'partials/_alerts.html' %}
+                            <!---->
+                            <form action="{% url 'register' %}" method="POST">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="username">Имя пользователя (в игре)</label>
+                                    <input type="text" name="username" class="form-control" required>
+                                </div>
+                                <label for="email">Регион</label>
+                                <select name="region" style="width: 100%; margin-bottom: 7px;">
+                                    <option value="euw1">EUW</option>
+                                    <option value="ru">Россия</option>
+                                </select>
+                                <div class="form-group">
+                                    <label for="password1">Пароль (Не от аккаунта, а для этого сервиса)</label>
+                                    <input type="password" name="password1" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="password2">Подтверждение пароля</label>
+                                    <input type="password" name="password2" class="form-control" required>
+                                </div>
+                                <input type="submit" value="Регистрация" class="btn btn-secondary btn-block">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

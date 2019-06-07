@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 
-
 class Retard(models.Model):
     name = models.CharField(default='idiot', max_length=100)
     player = models.ForeignKey(get_user_model(), related_name='retards', on_delete=models.CASCADE)
