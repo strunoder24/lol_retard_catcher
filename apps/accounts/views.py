@@ -3,12 +3,12 @@ from django.contrib import messages, auth
 from django.contrib.auth import get_user_model
 from django.db import IntegrityError
 from django.contrib.auth import login, logout, authenticate
+from project.variables import api_key
 
 import requests as ajax
 
 
 def is_exist(username, region):
-    api_key = 'RGAPI-336fda0c-226a-4a38-a44a-d484b026b052'
     response = ajax.get(
         f'https://{region}.api.riotgames.com/lol/summoner/v4/summoners/by-name/{username}?api_key={api_key}')
     if response.status_code == 200:
