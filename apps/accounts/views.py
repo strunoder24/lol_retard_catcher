@@ -3,18 +3,7 @@ from django.contrib import messages, auth
 from django.contrib.auth import get_user_model
 from django.db import IntegrityError
 from django.contrib.auth import login, logout, authenticate
-from project.variables import api_key
-
-import requests as ajax
-
-
-def is_exist(username, region):
-    response = ajax.get(
-        f'https://{region}.api.riotgames.com/lol/summoner/v4/summoners/by-name/{username}?api_key={api_key}')
-    if response.status_code == 200:
-        return True
-
-    return False
+from project.LeagueApiHelpers import LolApiHelperInstance
 
 
 def register(request):
@@ -26,9 +15,8 @@ def register(request):
 
         if password1 != password2:
             messages.error(request, 'Пароли не совпадают')
-            return redirect('register')
 
-        elif is_exist(username=username, region=region):
+        elif LolApiHelperInstance.is_summoner_exist(username=username, region=region):
             try:
                 get_user_model().objects.create_user(username=username, email=None, password=password1)
                 messages.success(request, 'Вы успешно зарегистрировались')
@@ -37,10 +25,10 @@ def register(request):
             except IntegrityError:
                 messages.error(request, 'Такой пользователь уже зарегистрирован в сервисе')
 
-            return render(request, 'accounts/register.html')
-
         else:
             messages.error(request, 'Пользователя с таким именем в игре не существует')
+
+        return render(request, 'accounts/register.html')
 
     elif request.method == 'GET':
         return render(request, 'accounts/register.html')
