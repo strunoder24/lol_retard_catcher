@@ -34,6 +34,18 @@ class Summoners(BaseInfo):
         return (f'http://ddragon.leagueoflegends.com/cdn/{last_version}/img/profileicon/'
                 f'{summoner_instance["profileIconId"]}.png')
 
+    def summoner_formatter(self, summoner=None, **kwargs):
+        if summoner is not None:
+            summoner_instance = summoner
+        else:
+            summoner_instance = self.get_summoner(kwargs['username'], kwargs['region'])
+
+        return {
+            'id': summoner_instance['id'],
+            'name': summoner_instance['name'],
+            'level': summoner_instance['summonerLevel'],
+            'profileIcon': self.get_summoner_icon_url(summoner_instance['name']),
+        }
 
 class Region:
     regions = {
@@ -48,7 +60,7 @@ class Region:
                   'tr1': 'Turkey',
                   'la1': 'Latin America North',
                   'la2': 'Latin America South'
-              },
+              }
 
     region_normalizer = {
                             'euw1': 'euw',
@@ -62,7 +74,7 @@ class Region:
                             'tr1': 'tr',
                             'la1': 'lan',
                             'la2': 'las'
-                        },
+                        }
 
 
 class LolApiHelper(Summoners, Region):

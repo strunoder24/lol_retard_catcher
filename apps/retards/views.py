@@ -6,5 +6,3 @@ from django.contrib.auth import login, logout, authenticate
 import requests as ajax
 
 
-def index(request):
-    return render(request, 'pages/index.html')

@@ -3,7 +3,7 @@ from django.contrib import messages, auth
 from django.contrib.auth import get_user_model
 from django.db import IntegrityError
 from django.contrib.auth import login, logout, authenticate
-from project.LeagueApiHelpers import LolApiHelperInstance
+from project.helpers.LeagueApiHelpers import LolApiHelperInstance
 
 
 def register(request):
@@ -12,13 +12,19 @@ def register(request):
         region = request.POST['region']
         password1 = request.POST['password1']
         password2 = request.POST['password2']
+        summoner = LolApiHelperInstance.get_summoner(username=username, region=region)
 
         if password1 != password2:
             messages.error(request, 'Пароли не совпадают')
 
-        elif LolApiHelperInstance.is_summoner_exist(username=username, region=region):
+        elif summoner:
             try:
-                get_user_model().objects.create_user(username=username, email=None, password=password1)
+                user = get_user_model().objects.create_user(username=username, email=None, password=password1)
+                user.profile.region = region
+                user.profile.icon = LolApiHelperInstance.get_summoner_icon_url(summoner=summoner)
+                user.profile.level = summoner['summonerLevel']
+                user.profile.encrypted_id = summoner['id']
+                user.save()
                 messages.success(request, 'Вы успешно зарегистрировались')
                 return redirect('login')
 

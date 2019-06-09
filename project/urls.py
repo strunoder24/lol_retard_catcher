@@ -8,6 +8,6 @@ from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('apps.retards.urls')),
+    path('', include('apps.pages.urls')),
     path('accounts/', include('apps.accounts.urls'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
