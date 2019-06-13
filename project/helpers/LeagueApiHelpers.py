@@ -3,7 +3,7 @@ import json
 
 
 class BaseInfo:
-    api_key = 'RGAPI-09fd4af2-ff15-4e56-a166-7c9647d12c39'
+    api_key = 'RGAPI-2395e14f-5291-4668-9e3a-ab3990c87b3e'
 
     @staticmethod
     def get_ddragon_last_version():

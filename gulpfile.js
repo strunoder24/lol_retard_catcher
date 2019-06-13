@@ -1,4 +1,4 @@
-const { series } = require('gulp');
+const { series, watch } = require('gulp');
 const gulp = require('gulp');
 const sass = require('gulp-sass');
 const rename = require('gulp-rename');
@@ -36,4 +36,8 @@ function scripts() {
 }
 
 
-exports.default = series(move_externals_js, move_externals_css, style, scripts);
+exports.collectExternals = series(move_externals_js, move_externals_css);
+exports.default = function () {
+    watch('frontend/styles/**/*.sass', {ignoreInitial: false}, style);
+    watch('frontend/js/*.js', {ignoreInitial: false}, scripts);
+};
