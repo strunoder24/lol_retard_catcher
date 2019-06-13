@@ -1,5 +1,6 @@
 ### Common ###
 /.idea/
+/node_modules/
 *.DS_Store
 
 ### Nuxt.js ###

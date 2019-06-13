@@ -3,7 +3,7 @@ import json
 
 
 class BaseInfo:
-    api_key = 'RGAPI-51b7e8de-b3f1-4ce9-8da0-af05ca694fe2'
+    api_key = 'RGAPI-09fd4af2-ff15-4e56-a166-7c9647d12c39'
 
     @staticmethod
     def get_ddragon_last_version():
@@ -46,6 +46,7 @@ class Summoners(BaseInfo):
             'level': summoner_instance['summonerLevel'],
             'profileIcon': self.get_summoner_icon_url(summoner_instance['name']),
         }
+
 
 class Region:
     regions = {

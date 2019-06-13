@@ -8,6 +8,12 @@ from project.helpers.LeagueApiHelpers import LolApiHelperInstance
 
 
 def index(request):
+    user = request.user
+    context = {}
+
+    if hasattr(user, 'profile'):
+        context['profiles'] = user.profile
+
     return render(request, 'pages/index.html')
 
 

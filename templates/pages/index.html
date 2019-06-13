@@ -7,11 +7,20 @@
 
 
 {% block content %}
-    <div>
+    <section>
         {% if user.is_authenticated %}
         {% include 'partials/_alerts.html' %}
-            <div class="container">
-                <h1>Индекс пейдж</h1>
+            <div class="container" style="padding-top: 20px; padding-bottom: 20px;">
+                <h1 class="main-page-header">Ваши аккаунты</h1>
+                {% if profiles %}
+
+                {% else %}
+{#                    <div class="alert alert-primary" role="alert" style="max-width: 700px; margin-top: 20px;">#}
+{#                        Похоже вы ещё не привязали ни одного аккаунта. Сделайте это сейчас!#}
+{#                        <button style="margin-left: 5px;" type="button" class="btn btn-success">Добавить</button>#}
+{#                    </div>#}
+                    ksksk
+                {% endif %}
             </div>
         {% else %}
             <div class="container">
@@ -31,5 +40,5 @@
                 </div>
             </div>
         {% endif %}
-    </div>
+    </section>
 {% endblock %}

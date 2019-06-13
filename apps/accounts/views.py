@@ -9,30 +9,20 @@ from project.helpers.LeagueApiHelpers import LolApiHelperInstance
 def register(request):
     if request.method == 'POST':
         username = request.POST['username']
-        region = request.POST['region']
         password1 = request.POST['password1']
         password2 = request.POST['password2']
-        summoner = LolApiHelperInstance.get_summoner(username=username, region=region)
 
         if password1 != password2:
             messages.error(request, 'Пароли не совпадают')
 
-        elif summoner:
+        else:
             try:
-                user = get_user_model().objects.create_user(username=username, email=None, password=password1)
-                user.profile.region = region
-                user.profile.icon = LolApiHelperInstance.get_summoner_icon_url(summoner=summoner)
-                user.profile.level = summoner['summonerLevel']
-                user.profile.encrypted_id = summoner['id']
-                user.save()
-                messages.success(request, 'Вы успешно зарегистрировались')
+                get_user_model().objects.create_user(username=username, email=None, password=password1)
+                messages.success(request, 'Вы успешно зарегистрировались!\nТеперь используйте свои данные чтобы войти')
                 return redirect('login')
 
             except IntegrityError:
                 messages.error(request, 'Такой пользователь уже зарегистрирован в сервисе')
-
-        else:
-            messages.error(request, 'Пользователя с таким именем в игре не существует')
 
         return render(request, 'accounts/register.html')
 
@@ -45,6 +35,7 @@ def login(request):
         username = request.POST['username']
         password = request.POST['password']
 
+        user = get_user_model().objects.filter(username=username)
         user = authenticate(username=username, password=password)
 
         if user is not None:
@@ -62,5 +53,4 @@ def login(request):
 def logout(request):
     if request.method == 'POST':
         auth.logout(request)
-        messages.success(request, 'Выход из аккаунты успешен!')
         return redirect('index')

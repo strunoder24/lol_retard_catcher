@@ -22,16 +22,11 @@
                             <form action="{% url 'register' %}" method="POST">
                                 {% csrf_token %}
                                 <div class="form-group">
-                                    <label for="username">Имя пользователя (в игре)</label>
+                                    <label for="username">Имя пользователя</label>
                                     <input type="text" name="username" class="form-control" required>
                                 </div>
-                                <label for="email">Регион</label>
-                                <select name="region" style="width: 100%; margin-bottom: 7px;">
-                                    <option value="euw1">EUW</option>
-                                    <option value="ru">Россия</option>
-                                </select>
                                 <div class="form-group">
-                                    <label for="password1">Пароль (Не от аккаунта, а для этого сервиса)</label>
+                                    <label for="password1">Пароль</label>
                                     <input type="password" name="password1" class="form-control" required>
                                 </div>
                                 <div class="form-group">
