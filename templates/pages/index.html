@@ -15,11 +15,10 @@
                 {% if profiles %}
 
                 {% else %}
-{#                    <div class="alert alert-primary" role="alert" style="max-width: 700px; margin-top: 20px;">#}
-{#                        Похоже вы ещё не привязали ни одного аккаунта. Сделайте это сейчас!#}
-{#                        <button style="margin-left: 5px;" type="button" class="btn btn-success">Добавить</button>#}
-{#                    </div>#}
-                    ksksk
+                    <div class="alert alert-info" role="alert" style="">
+                        Похоже вы ещё не привязали ни одного аккаунта. Сделайте это сейчас!
+                    </div>
+                    {% include 'modals/add_account.html' %}
                 {% endif %}
             </div>
         {% else %}

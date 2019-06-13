@@ -1,4 +1,5 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, redirect
+from django.http import HttpResponse
 from django.contrib import messages, auth
 from django.contrib.auth import get_user_model
 from django.contrib.auth import login, logout, authenticate
@@ -15,6 +16,13 @@ def index(request):
         context['profiles'] = user.profile
 
     return render(request, 'pages/index.html')
+
+
+def add_account(request):
+    pass
+
+    return redirect('index')
+
 
 
 def summoner(request, region, name):
