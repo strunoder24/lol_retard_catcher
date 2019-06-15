@@ -17,5 +17,8 @@
     "gulp-uglify": "^3.0.2",
     "i": "^0.3.6",
     "npm": "^6.9.0"
+  },
+  "devDependencies": {
+    "gulp-concat": "^2.6.1"
   }
 }

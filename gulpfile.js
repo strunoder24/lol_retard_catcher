@@ -3,7 +3,8 @@ const gulp = require('gulp');
 const sass = require('gulp-sass');
 const rename = require('gulp-rename');
 const uglify = require('gulp-uglify');
-let cleanCSS = require('gulp-clean-css');
+const concat = require('gulp-concat');
+const cleanCSS = require('gulp-clean-css');
 
 //move external libs to static
 function move_externals_js() {
@@ -30,8 +31,8 @@ function style() {
 
 function scripts() {
     return gulp.src('frontend/js/*.js')
-        .pipe(uglify())
-        .pipe(rename('main.js'))
+        .pipe(concat('main.js'))
+        // .pipe(uglify())
         .pipe(gulp.dest('static/js'))
 }
 

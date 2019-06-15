@@ -9,7 +9,9 @@
 {% block content %}
     <section>
         {% if user.is_authenticated %}
-        {% include 'partials/_alerts.html' %}
+            <div style="margin-top: 10px;">
+                {% include 'partials/_alerts.html' %}
+            </div>
             <div class="container" style="padding-top: 20px; padding-bottom: 20px;">
                 <h1 class="main-page-header">Ваши аккаунты</h1>
                 {% if profiles %}
