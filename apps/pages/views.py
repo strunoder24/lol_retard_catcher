@@ -30,7 +30,12 @@ def index(request):
 
 
 def profile(request, profile):
-    return render(request, 'pages/index.html')
+    if request.user.is_authenticated:
+        profile = Profile.objects.filter(name=profile, user=request.user)
+
+        return render(request, 'pages/profile.html')
+
+    return redirect('index')
 
 
 def profile_destroy(request):

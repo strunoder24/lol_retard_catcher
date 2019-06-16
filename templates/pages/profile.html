@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load basic_filters %}
+
+
+{% block title %}
+    {{ profile.name }}
+{% endblock %}
+
+
+{% block content %}
+    <section class="main-section">
+        <div class="container">
+            {% if messages %}
+                <div style="margin-top: 10px;">
+                    {% include 'partials/_alerts.html' %}
+                </div>
+            {% endif %}
+            {% if retards %}
+
+            {% else %}
+                <div class="alert alert-info" role="alert" style="">
+                    Ваш чёрный список пуст. Добавьте кого-нибудь прямо сейчас!
+                </div>
+                {% include 'modals/add_account.html' %}
+            {% endif %}
+        </div>
+    </section>
+{% endblock %}

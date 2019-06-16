@@ -10,14 +10,26 @@
 {% block content %}
     <section class="main-section">
         {% if user.is_authenticated %}
-            {% if messages %}
-                <div style="margin-top: 10px;">
-                    {% include 'partials/_alerts.html' %}
-                </div>
-            {% endif %}
-            <div class="container index-container" style="padding-top: 20px; padding-bottom: 20px;">
-                <h1 class="main-page-header">Привязанные аккаунты</h1>
+            <div
+                    {% if profiles %}
+                    class="container index-container"
+                    {% else %}
+                    class="container index-container"
+                    style="display: block"
+                    {% endif %}
+            >
+                {% if messages %}
+                    <div style="margin-top: 10px;">
+                        {% include 'partials/_alerts.html' %}
+                    </div>
+                {% endif %}
                 {% if profiles %}
+                    <div class="main-page-header-container">
+                        <h1 class="main-page-header">Привязанные аккаунты</h1>
+                        <div>
+                            {% include 'modals/add_account.html' %}
+                        </div>
+                    </div>
                     <div class="profile-wrapper">
                         {% for profile in profiles %}
                             <div class="profile-container">
@@ -70,6 +82,7 @@
                         </ul>
                     {% endif %}
                 {% else %}
+                    <h1 class="main-page-header">Привязанные аккаунты</h1>
                     <div class="alert alert-info" role="alert" style="">
                         Похоже вы ещё не привязали ни одного аккаунта. Сделайте это сейчас!
                     </div>
