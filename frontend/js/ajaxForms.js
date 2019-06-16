@@ -18,8 +18,8 @@ class AjaxForm {
                 fields[field_name] = elements[field_name].value
             }
     
-            const success_button = e.target.querySelector('.btn-success');
-            success_button.disabled = true;
+            const save_button = e.target.querySelector('.btn-success');
+            save_button.disabled = true;
             $.ajax({
                 type: e.target.method.toUpperCase(),
                 url: e.target.action,
@@ -39,8 +39,8 @@ class AjaxForm {
                     message_text.value = e.responseJSON.message;
                     message.style.display = 'block';
 
-                    //Если случилась сразу разблокируем кнопку сохранения
-                    success_button.disabled = false;
+                    //Если ошибка случилась сразу разблокируем кнопку сохранения
+                    save_button.disabled = false;
 
                     //Если модалка была закрыта или открыта, то сразу отключай ошибки
                     $('#' + self.url + '_modal').on({

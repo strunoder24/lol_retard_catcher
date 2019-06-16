@@ -9,16 +9,8 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <ul class="navbar-nav ml-auto">
+            <ul class="navbar-nav ml-auto" style="margin-right: 7px;">
                 {% if user.is_authenticated %}
-{#                    <div style="display: flex; align-items: center; color: #fff; padding-right: 10px">#}
-{#                        <span>Регион:</span>#}
-{#                    </div>#}
-{#                    <select class="form-control" style="margin-right: 5px;">#}
-{#                        {% for key, val in server_regions.items %}#}
-{#                            <option value="{{ key }}">{{ val }}</option>#}
-{#                        {% endfor %}#}
-{#                    </select>#}
                     <li class="nav-item mr-3">
                         <a href="javascript:{document.getElementById('logout').submit()}" class="nav-link">
                             <i class="fas fa-sign-out-alt"></i> Выйти

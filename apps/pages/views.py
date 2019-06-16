@@ -3,6 +3,7 @@ from django.http import HttpResponse, JsonResponse
 from django.contrib import messages, auth
 from django.contrib.auth import get_user_model
 from django.contrib.auth import login, logout, authenticate
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db import IntegrityError
 import requests as ajax
 
@@ -13,13 +14,31 @@ from project.helpers.LeagueApiHelpers import LolApiHelperInstance
 
 def index(request):
     user = request.user
-    profiles = Profile.objects.filter(user=user)
+    context = {}
 
-    context = {
-        'profiles': profiles
-    }
+    if user.is_authenticated:
+        profiles = Profile.objects.order_by('-id').filter(user=user)
+        paginator = Paginator(profiles, 10)
+        page = request.GET.get('p')
+        profile_page = paginator.get_page(page)
 
+        context = {
+            'profiles': profile_page
+        }
+
+    return render(request, 'pages/index.html', context)
+
+
+def profile(request, profile):
     return render(request, 'pages/index.html')
+
+
+def profile_destroy(request):
+    if request.method == 'POST':
+        name = request.POST['profile_name']
+        Profile.objects.filter(name=name, user=request.user).delete()
+
+    return redirect('index')
 
 
 def add_account(request):

@@ -1,0 +1,33 @@
+<!-- Button trigger modal -->
+<button
+        class="profile-delete-cross"
+        type="button"
+        data-toggle="modal"
+        data-target="#delete_account_modal">
+    &times;
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="delete_account_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <form action="{% url 'profile_kill' %}" class="profile-delete modal-content" method="POST">
+            {% csrf_token %}
+            <input type="text" name="profile_name" hidden value="{{ profile.name }}">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Удаление аккаунта</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h5>Вы уверены что хотите удалить этот аккаунт?
+                    Весь связанный с ним список долбоёбов так же будет удалён.</h5>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info" data-dismiss="modal">Отмена</button>
+                <button type="submit" class="btn btn-danger">Удалить</button>
+            </div>
+        </form>
+    </div>
+</div>
