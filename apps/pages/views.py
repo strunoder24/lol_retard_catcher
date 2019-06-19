@@ -29,13 +29,13 @@ def index(request):
     return render(request, 'pages/index.html', context)
 
 
-def profile(request, profile):
-    if request.user.is_authenticated:
-        profile = Profile.objects.filter(name=profile, user=request.user)
+def profile(request, account):
+    lol_account = Profile.objects.filter(name=account, user=request.user)
 
+    if request.user.is_authenticated and lol_account:
         return render(request, 'pages/profile.html')
-
-    return redirect('index')
+    else:
+        return redirect('index')
 
 
 def profile_destroy(request):
@@ -53,7 +53,7 @@ def add_account(request):
 
         lol_user = LolApiHelperInstance.get_summoner(username=username, region=region)
 
-        if lol_user:
+        if 'status_code' not in lol_user or lol_user['status_code'] == 200:  # Когда ответ успешен, поле status_code не приходит
             try:
                 Profile.objects.create(name=username, region=region, user=request.user,
                                        encrypted_id=lol_user['id'], level=lol_user['summonerLevel'],
@@ -61,7 +61,7 @@ def add_account(request):
 
             except IntegrityError:
                 return JsonResponse({
-                    'status': '400',
+                    'status_code': '400',
                     'message': 'Такой пользователь уже добавлен'
                 }, status=400)
 
@@ -71,9 +71,12 @@ def add_account(request):
                 'message': 'Пользователь успешно добавлен'
             }, status=200)
 
+        elif lol_user['status_code'] == 403:
+            return JsonResponse(lol_user, status=403)
+
         else:
             return JsonResponse({
-                'status': '400',
+                'status_code': '400',
                 'message': 'В данном регионе не существует указанного пользователя'
             }, status=400)
 

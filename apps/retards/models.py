@@ -1,16 +1,14 @@
 from django.db import models
-from django.contrib.auth import get_user_model
+from apps.accounts.models import Profile
 
 
 class Retard(models.Model):
-    name = models.CharField(default='idiot', max_length=100)
-    player = models.ForeignKey(get_user_model(), related_name='retards', on_delete=models.CASCADE)
-    description = models.TextField(blank=True)
-    puuid = models.CharField(blank=True, max_length=78)
-    summonerLevel = models.PositiveIntegerField(blank=True)
-    revisionDate = models.CharField(blank=True, max_length=100)
-    summonerId = models.CharField(max_length=63)
-    accountId = models.CharField(max_length=56)
+    name = models.CharField(default='SirGay', max_length=100)
+    player = models.ForeignKey(Profile, related_name='retards', on_delete=models.CASCADE)
+    icon = models.CharField(max_length=100, blank=True)
+    description = models.CharField(blank=True, max_length=1000)
+    encrypted_id = models.CharField(blank=True, max_length=100)
+    level = models.PositiveIntegerField(blank=True)
 
     def __str__(self):
         return self.name

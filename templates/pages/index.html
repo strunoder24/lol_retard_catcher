@@ -10,14 +10,7 @@
 {% block content %}
     <section class="main-section">
         {% if user.is_authenticated %}
-            <div
-                    {% if profiles %}
-                    class="container index-container"
-                    {% else %}
-                    class="container index-container"
-                    style="display: block"
-                    {% endif %}
-            >
+            <div class="container index-container">
                 {% if messages %}
                     <div style="margin-top: 10px;">
                         {% include 'partials/_alerts.html' %}

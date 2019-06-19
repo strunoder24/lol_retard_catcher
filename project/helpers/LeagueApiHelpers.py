@@ -3,7 +3,7 @@ import json
 
 
 class BaseInfo:
-    api_key = 'RGAPI-3fad9f1c-9e46-4fd0-8c48-1b86b415fe6b'
+    _api_key = 'RGAPI-a862008c-0d23-4a22-baa5-1a829924b682'
 
     @staticmethod
     def get_ddragon_last_version():
@@ -13,16 +13,19 @@ class BaseInfo:
 
 
 class Summoners(BaseInfo):
-    def is_summoner_exist(self, username, region):
+    def _is_summoner_exist(self, username, region):
         response = requests.get(
-            f'https://{region}.api.riotgames.com/lol/summoner/v4/summoners/by-name/{username}?api_key={self.api_key}')
+            f'https://{region}.api.riotgames.com/lol/summoner/v4/summoners/by-name/{username}?api_key={self._api_key}')
         if response.status_code == 200:
             return json.loads(response.text)
+
+        elif response.status_code == 403:
+            return {'status_code': 403, 'message': 'Не могу связатся с API игры'}
 
         return False
 
     def get_summoner(self, username, region):
-        return self.is_summoner_exist(username, region)
+        return self._is_summoner_exist(username, region)
 
     def get_summoner_icon_url(self, summoner=None, **kwargs):
         if summoner is not None:

@@ -35,8 +35,7 @@ class AjaxForm {
 
                     let message = form.querySelector('#message');
                     let message_text = form.querySelector('#message-text');
-
-                    message_text.value = e.responseJSON.message;
+                    message_text.innerHTML = e.responseJSON.message;
                     message.style.display = 'block';
 
                     //Если ошибка случилась сразу разблокируем кнопку сохранения

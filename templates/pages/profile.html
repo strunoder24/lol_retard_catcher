@@ -9,7 +9,7 @@
 
 {% block content %}
     <section class="main-section">
-        <div class="container">
+        <div class="container index-container">
             {% if messages %}
                 <div style="margin-top: 10px;">
                     {% include 'partials/_alerts.html' %}
@@ -21,7 +21,7 @@
                 <div class="alert alert-info" role="alert" style="">
                     Ваш чёрный список пуст. Добавьте кого-нибудь прямо сейчас!
                 </div>
-                {% include 'modals/add_account.html' %}
+                {% include 'modals/add_retard.html' %}
             {% endif %}
         </div>
     </section>
