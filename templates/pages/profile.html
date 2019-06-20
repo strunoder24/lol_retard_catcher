@@ -21,7 +21,9 @@
                 <div class="alert alert-info" role="alert" style="">
                     Ваш чёрный список пуст. Добавьте кого-нибудь прямо сейчас!
                 </div>
-                {% include 'modals/add_retard.html' %}
+                {% with lol_account as lol_account %}
+                    {% include 'modals/add_retard.html' %}
+                {% endwith %}
             {% endif %}
         </div>
     </section>
