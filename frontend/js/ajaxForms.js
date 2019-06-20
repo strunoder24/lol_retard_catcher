@@ -31,7 +31,7 @@ class AjaxForm {
                     self.success(r)
                 },
                 error: function (e) {
-                    const form = document.querySelector('#add_account');
+                    const form = document.querySelector('#' + self.url);
 
                     let message = form.querySelector('#message');
                     let message_text = form.querySelector('#message-text');
@@ -62,5 +62,11 @@ const add_account = new AjaxForm('add_account', ['username', 'region'],
         document.location.reload()
     }, function (e) {});
 
+const add_retard = new AjaxForm('add_retard', ['username', 'description', 'lol_account'],
+    function () {
+        document.location.reload()
+    });
+
 
 add_account.makeCall();
+add_retard.makeCall();

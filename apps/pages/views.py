@@ -33,13 +33,15 @@ def index(request):
 
 def profile(request, account):
     lol_account = Profile.objects.get(name=account, user=request.user)
+    retards = Retard.objects.filter(player=lol_account)
 
     if request.user.is_authenticated and lol_account:
         context = {
-            'lol_account': lol_account
+            'lol_account': lol_account,
+            'retards': retards
         }
 
-        return render(request, 'pages/profile.html')
+        return render(request, 'pages/profile.html', context)
     else:
         return redirect('index')
 
@@ -68,8 +70,11 @@ def add_account(request):
             lol_user = LolApiHelperInstance.get_summoner(username=username, region=region)
 
             if 'status_code' not in lol_user or lol_user['status_code'] == 200:
-                Profile.objects.create(name=username, region=region, user=request.user,
-                                       encrypted_id=lol_user['id'], level=lol_user['summonerLevel'],
+                Profile.objects.create(name=username,
+                                       region=region,
+                                       user=request.user,
+                                       encrypted_id=lol_user['id'],
+                                       level=lol_user['summonerLevel'],
                                        icon=LolApiHelperInstance.get_summoner_icon_url(summoner=lol_user))
                 messages.success(request, 'Пользователь успешно добавлен')
                 return JsonResponse({
@@ -89,35 +94,40 @@ def add_account(request):
 
 def add_retard(request):
     if request.method == 'POST':
+        player = Profile.objects.get(pk=request.POST['lol_account'])
+
+        region = player.region
         username = request.POST['username']
-        region = request.POST['region']
         description = request.POST['description']
 
-        # lol_user = LolApiHelperInstance.get_summoner(username=username, region=region)
-        #
-        # if 'status_code' not in lol_user or lol_user['status_code'] == 200:  # Когда ответ успешен, поле status_code не приходит
-        #     try:
-        #         Retard.objects.create(name=username, region=region, user=request.user, description=description,
-        #                               encrypted_id=lol_user['id'], level=lol_user['summonerLevel'],
-        #                               icon=LolApiHelperInstance.get_summoner_icon_url(summoner=lol_user))
-        #
-        #     except IntegrityError:
-        #         return JsonResponse({
-        #             'status_code': '400',
-        #             'message': 'Такой пользователь уже есть в чёрном списке'
-        #         }, status=400)
-        #
-        #     messages.success(request, 'Пользователь успешно добавлен')
-        #     return JsonResponse({
-        #         'status': '200',
-        #         'message': 'Пользователь успешно добавлен в чёрный список'
-        #     }, status=200)
-        #
-        # elif lol_user['status_code'] == 403:
-        #     return JsonResponse(lol_user, status=403)
-        #
-        # else:
-        #     return JsonResponse({
-        #         'status_code': '400',
-        #         'message': 'В данном регионе не существует указанного пользователя'
-        #     }, status=400)
+        try:
+            Retard.objects.get(name=username, player=player)
+            return JsonResponse({
+                'status_code': '400',
+                'message': 'Такой пользователь уже добавлен в этот чёрный список'
+            }, status=400)
+
+        except ObjectDoesNotExist:  # Если объект не найден, то его надо добавить
+            lol_user = LolApiHelperInstance.get_summoner(username=username, region=region)
+
+            if 'status_code' not in lol_user or lol_user['status_code'] == 200:
+                Retard.objects.create(name=username,
+                                      player=player,
+                                      encrypted_id=lol_user['id'],
+                                      level=lol_user['summonerLevel'],
+                                      icon=LolApiHelperInstance.get_summoner_icon_url(summoner=lol_user),
+                                      description=description)
+                messages.success(request, 'Пользователь успешно добавлен в чёрный список')
+                return JsonResponse({
+                    'status': '200',
+                    'message': 'Пользователь успешно добавлен в чёрный список'
+                }, status=200)
+
+            elif lol_user['status_code'] == 403:
+                return JsonResponse(lol_user, status=403)
+
+            else:
+                return JsonResponse({
+                    'status_code': '400',
+                    'message': 'В данном регионе не существует указанного пользователя'
+                }, status=400)

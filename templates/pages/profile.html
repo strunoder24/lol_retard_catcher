@@ -16,7 +16,9 @@
                 </div>
             {% endif %}
             {% if retards %}
-
+                {% for retard in retards %}
+                    <p>{{ retard }}</p>
+                {% endfor %}
             {% else %}
                 <div class="alert alert-info" role="alert" style="">
                     Ваш чёрный список пуст. Добавьте кого-нибудь прямо сейчас!
