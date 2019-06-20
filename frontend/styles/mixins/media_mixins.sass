@@ -1,0 +1,57 @@
+//$xl = 1201px
+//$l = 992px - 1200px
+//$m = 768px - 991px
+//$s = 576px - 767px
+//$xs = 320px - 575px
+
+@mixin media($media)
+    @if $media == xs-s
+        @media screen and (min-width: 320px) and (max-width: 575px)
+            @content
+    @if $media == s-m
+        @media screen and (min-width: 576px) and (max-width: 767px)
+            @content
+    @else if $media == m-l
+        @media screen and (min-width: 768px) and (max-width: 991px)
+            @content
+    @else if $media == l-xl
+        @media screen and (min-width: 992px) and (max-width: 1200px)
+            @content
+    @else if $media == xl
+        @media screen and (min-width: 1201px)
+            @content
+
+@mixin maxMedia($maxMedia)
+    @if $maxMedia == xs
+        @media screen  and (max-width: 575px)
+            @content
+
+    @if $maxMedia == s
+        @media screen  and (max-width: 767px)
+            @content
+    @else if $maxMedia == m
+        @media screen and (max-width: 991px)
+            @content
+    @else if $maxMedia == l
+        @media screen and (max-width: 1200px)
+            @content
+    @else if $maxMedia == xl
+        @media screen and (min-width: 1201px)
+            @content
+
+@mixin minMedia($minMedia)
+    @if $minMedia == xs
+        @media screen  and (min-width: 320px)
+            @content
+    @else if $minMedia == s
+        @media screen and (min-width: 576px)
+            @content
+    @else if $minMedia == m
+        @media screen and (min-width: 768px)
+            @content
+    @else if $minMedia == l
+        @media screen and (min-width: 992px)
+            @content
+    @else if $minMedia == xl
+        @media screen and (min-width: 1201px)
+            @content

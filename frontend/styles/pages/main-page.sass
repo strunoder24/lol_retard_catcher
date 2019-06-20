@@ -52,6 +52,25 @@
     box-shadow: 5px 10px 20px rgba(0, 0, 0, 0)
     transition: box-shadow linear .2s
 
+    +minMedia(xl)
+        width: 206px
+        height: 225px
+
+    +media(l-xl)
+        width: 217px
+        height: 230px
+
+    +media(m-l)
+        width: 216px
+        height: 225px
+
+    +media(s-m)
+        width: 244px
+        height: 230px
+
+    +maxMedia(xs)
+        width: 100%
+
     &:hover
         box-shadow: 5px 10px 20px rgba(0, 0, 0, .2)
 
